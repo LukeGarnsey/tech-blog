@@ -16,11 +16,17 @@ User.init({
     },
     name:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
+        validate:{
+            isAlpha:true,
+        }
     },
     password:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
+        validate:{
+            len: (8),
+        }
     }
 },
 {
