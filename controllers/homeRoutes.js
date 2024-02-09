@@ -20,13 +20,13 @@ router.get('/', async(req, res)=>{
       }],
       
     });
-    if(!blogPosts[0])
-      return res.status(404).json({message: "NO blogposts found"});
     const temp = {
-      blogPosts, 
       isLoggedIn:req.session.logged_in
     };
-    console.log(temp);
+    if(!blogPosts[0])
+      return res.status(200).render('home', temp);
+    
+    temp.blogPosts = blogPosts;
     return res.status(200).render('home', temp);
     // return res.status(200).json(items);
   }catch(err){
