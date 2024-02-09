@@ -27,5 +27,17 @@ router.get('/', async(req, res)=>{
     return res.status(500).send(err);
   }
 });
+router.get("/user/:id", async(req, res)=>{
+  try{
+    const user = await User.findByPk(req.params.id, {
+      include: [{model:BlogPost}, {model:Comment}],
+    });
+
+   
+    return res.status(200).json(user);
+  }catch(err){
+    return res.status(500).send(err);
+  }
+});
 
 module.exports = router;

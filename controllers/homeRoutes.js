@@ -4,8 +4,6 @@ const router = require('express').Router();
 
 router.get('/', async(req, res)=>{
   try{
-    console.log(req.session.user_id);
-    console.log(req.session.logged_in);
     const blogPosts = await BlogPost.findAll({
       attributes:{exclude:['user_id', 'id', 'createdAt', 'updatedAt']},
       include: [
@@ -24,8 +22,12 @@ router.get('/', async(req, res)=>{
     });
     if(!blogPosts[0])
       return res.status(404).json({message: "NO blogposts found"});
-    
-    return res.status(200).render('dashboard', {blogPosts});
+    const temp = {
+      blogPosts, 
+      isLoggedIn:req.session.logged_in
+    };
+    console.log(temp);
+    return res.status(200).render('home', temp);
     // return res.status(200).json(items);
   }catch(err){
     return res.status(500).send(err);
@@ -43,22 +45,38 @@ router.get("/comments", async(req,res)=>{
     return res.status(500).send(err);
   }
 });
-router.get("/user/:id", async(req, res)=>{
+router.get("/dashboard", async(req, res)=>{
   try{
-    const item = await User.findByPk(req.params.id, {
-      include: [{model:BlogPost}, {model:Comment}],
+    if(!req.session.logged_in || !req.session.user_id)
+      return res.redirect("/login");
+
+    const user = await User.findByPk(req.session.user_id, {
+      include: [{model:BlogPost,
+        include: [
+        {
+          model:Comment, 
+          attributes:['content'], 
+          include: [
+            {
+              model:User, attributes:['username']
+            }], 
+        }]}, {model:Comment}],
     });
 
-    if(!item)
-      return res.status(404).json({message: "NO Item found"});
+    if(!user)
+      return res.status(404).redirect("/login");
 
-    return res.status(200).json(item);
+    console.log(user.dataValues.blogposts[0].dataValues.comments[0]);
+    return res.status(200).render('dashboard', {
+      user, 
+      isLoggedIn:req.session.logged_in
+    });
   }catch(err){
     return res.status(500).send(err);
   }
 });
 router.get('/login', async(req, res)=>{
-  res.render('user');
+  res.render('user', {isLoggedIn:req.session.logged_in});
 });
 
 

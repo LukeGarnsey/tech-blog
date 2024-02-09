@@ -1,1 +1,11 @@
-<div><h1>Top Bar</h1><a href='/login'>Login</a></div>
+<div>
+  <a href='/'>Home</a>
+  <a href='/dashboard'>Dashboard</a>
+  {{#if isLoggedIn}}
+  <a id='logout'>Logout</a>
+  <script src="/js/logout.js"></script>
+  {{else}}
+    <a href='/login'>Login</a>
+  {{/if}}
+
+</div>
