@@ -4,6 +4,8 @@ const router = require('express').Router();
 
 router.get('/', async(req, res)=>{
   try{
+    // console.log(req.session.user_id);
+    // console.log(req.session.logged_in);
     const blogPosts = await BlogPost.findAll({
       attributes:{exclude:['user_id', 'id', 'createdAt', 'updatedAt']},
       include: [
