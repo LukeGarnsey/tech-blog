@@ -66,7 +66,7 @@ router.get("/dashboard", async(req, res)=>{
     if(!user)
       return res.status(404).redirect("/login");
 
-    console.log(user.dataValues.blogposts[0].dataValues.comments[0]);
+    // console.log(user.dataValues.blogposts[0].dataValues.comments[0]);
     return res.status(200).render('dashboard', {
       user, 
       isLoggedIn:req.session.logged_in
@@ -74,6 +74,12 @@ router.get("/dashboard", async(req, res)=>{
   }catch(err){
     return res.status(500).send(err);
   }
+});
+router.get('/create', async(req,res)=>{
+  if(!req.session.logged_in || !req.session.user_id)
+      return res.redirect("/login");
+
+  return res.status(200).render('create');
 });
 router.get('/login', async(req, res)=>{
   res.render('user', {isLoggedIn:req.session.logged_in});

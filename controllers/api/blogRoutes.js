@@ -39,5 +39,18 @@ router.get("/user/:id", async(req, res)=>{
     return res.status(500).send(err);
   }
 });
+router.post("/create", async(req, res)=>{
+  try{
+    if(!req.session.logged_in || !req.session.user_id)
+      return res.redirect("/login");
+    const newBlog = req.body;
+    newBlog.user_id = req.session.user_id;
+    const blog = await BlogPost.create(newBlog);
+
+    return res.status(200).json(blog);
+  }catch(err){
+    return res.status(500).send(err);
+  }
+});
 
 module.exports = router;
