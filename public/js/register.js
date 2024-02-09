@@ -3,14 +3,14 @@ const registerFormHandler = async (event) => {
   event.preventDefault();
 
   // TODO: Add a comment describing the functionality of these expressions
-  const email = document.querySelector('#register-username').value.trim();
+  const username = document.querySelector('#register-username').value.trim();
   const password = document.querySelector('#register-password').value.trim();
 
-  if (email && password) {
+  if (username && password) {
     // TODO: Add a comment describing the functionality of this expression
     const response = await fetch('/users/register', {
       method: 'POST',
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ username, password }),
       headers: { 'Content-Type': 'application/json' },
     });
 
