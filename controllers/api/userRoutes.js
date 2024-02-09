@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 router.post('/login', async(req, res)=>{
   try{
+    console.log("HEHIEFHIEFHEF");
     //setup session cookie to have user logged in
     //VErify user is in DB
     res.status(200).send("User logged in");
@@ -9,7 +10,7 @@ router.post('/login', async(req, res)=>{
     res.status(400).json(err);
   }
 });
-router.post('/signup', async(req, res)=>{
+router.post('/register', async(req, res)=>{
   try{
     //setup session cookie to have user logged in
     //create User in DB
