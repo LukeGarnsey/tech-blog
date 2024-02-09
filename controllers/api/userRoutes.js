@@ -1,30 +1,49 @@
+const { User } = require('../../models');
+const bcrypt = require('bcrypt');
 const router = require('express').Router();
 
 router.post('/login', async(req, res)=>{
   try{
-    console.log("HEHIEFHIEFHEF");
-    //setup session cookie to have user logged in
-    //VErify user is in DB
-    res.status(200).send("User logged in");
+    const user = await User.findOne({where:{username: req.body.username}});
+    if(!user)
+      return res.status(400).json({message: 'Incorrect email or password'});
+    
+    const valid = await user.checkPassword(req.body.password);
+    if(!valid)
+      return res.status(400).json({message: 'Incorrect email or password'});
+
+    req.session.save(()=>{
+      console.log("session save");
+      req.session.user_id = user.id;
+      req.session.logged_in = true;
+      return res.status(200).send("Login Successful");
+    });
   }catch(err){
-    res.status(400).json(err);
+    return res.status(400).json(err);
   }
 });
 router.post('/register', async(req, res)=>{
   try{
-    //setup session cookie to have user logged in
-    //create User in DB
-    res.status(200).send("User Signed Up");
+    const user = await User.create(req.body);
+    
+    req.session.save(()=>{
+      req.session.user_id = user.id;
+      req.session.logged_in = true;
+      return res.status(200).send("User Signed Up");
+    });
+    
   }catch(err){
     res.status(400).json(err);
   }
 });
 router.post('/logout', async(req, res)=>{
   try{
-    //Destroy session cookie
-    res.status(204).end();
+    req.session.destroy(()=>{
+      return res.status(204).end();
+    });
+    
   }catch(err){
-    res.status(404).end();
+    return res.status(404).end();
   }
 });
 
