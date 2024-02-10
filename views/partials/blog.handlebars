@@ -1,5 +1,5 @@
 <div class="container bg-primary p-2 text-default">
-  <h2>{{dataValues.title}}</h2>
+  <h2><a href="/blog/{{dataValues.id}}" class="text-default">{{dataValues.title}}</a></h2>
   <h4 class="text-danger">By: {{dataValues.user.dataValues.username}}</h4>
   <p class="bg-dark text-white container-fluid p-1">{{dataValues.content}}</p>
 </div>

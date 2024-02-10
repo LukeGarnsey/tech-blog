@@ -9,7 +9,7 @@ const response = await fetch('/blogposts/create', {
   if (response.ok) {
     document.location.replace('/dashboard');
   } else {
-    alert('Failed to Save blog');
+    alert('Failed to Save comment');
   }
 };
 document.getElementById("save").onclick = (event) =>{

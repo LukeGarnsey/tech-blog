@@ -11,4 +11,24 @@
   
   {{> comment}}
   {{/each}}
+  <div class="container">
+        
+        <div class="bg-danger">
+          <form class="note-form bg-dark">
+            <h5 class="bg-dark text-light p-2">
+              Add Comment:
+            </h5>
+            <input style="width: 100%;" id="comment-field" data-blogid="{{blogPost.dataValues.id}}"
+            class="bg-dark text-light p-2"
+            placeholder="New Comment"
+            maxlength="128"
+            type="text"
+            />
+            {{!-- <textarea class="note-textarea text-white my-2 p-4 bg-primary" placeholder="Body Text"></textarea> --}}
+          </form>
+        </div>
+      <button id="save" class="my-2 p-2 bg-dark text-danger">Add Comment</button>
+      </div>
+      <script src="/js/save-comment.js"></script>
+
 </div>

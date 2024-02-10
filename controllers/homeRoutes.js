@@ -5,7 +5,7 @@ const router = require('express').Router();
 router.get('/', async(req, res)=>{
   try{
     const blogPosts = await BlogPost.findAll({
-      attributes:{exclude:['user_id', 'id', 'createdAt', 'updatedAt']},
+      attributes:{exclude:['user_id', 'createdAt', 'updatedAt']},
       include: [
       {
         model:Comment, 
@@ -39,7 +39,7 @@ router.get('/blog/:id', async(req, res)=>{
       return res.redirect("/login");
 
     const blogPost = await BlogPost.findByPk(req.params.id, {
-      attributes:{exclude:['user_id', 'id', 'createdAt', 'updatedAt']},
+      attributes:{exclude:['user_id', 'createdAt', 'updatedAt']},
       include: [
       {
         model:Comment, 
@@ -63,6 +63,20 @@ router.get('/blog/:id', async(req, res)=>{
     temp.blogPost = blogPost;
     return res.status(200).render('blogpost', temp);
     
+  }catch(err){
+    return res.status(500).send(err);
+  }
+});
+router.post("/comment", async(req, res) =>{
+  try{
+    if(!req.session.logged_in || !req.session.user_id)
+      return res.redirect("/login");
+
+    const newComment = req.body;
+    newComment.user_id = req.session.user_id;
+    const comment = await Comment.create(newComment);
+
+    return res.status(200).json(comment);
   }catch(err){
     return res.status(500).send(err);
   }
