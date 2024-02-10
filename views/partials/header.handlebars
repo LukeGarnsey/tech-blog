@@ -1,11 +1,12 @@
-<div>
-  <a href='/'>Home</a>
-  <a href='/dashboard'>Dashboard</a>
+<div class="p-3 bg-black">
+  <div class="container">
+  <a href='/' class="m-4 p-2 bg-light">Home</a>
+  <a href='/dashboard' class="m-4 p-2 bg-light">Dashboard</a>
   {{#if isLoggedIn}}
-  <a id='logout'>Logout</a>
+  <a id='logout' class="m-4 p-2 bg-light">Logout</a>
   <script src="/js/logout.js"></script>
   {{else}}
-    <a href='/login'>Login</a>
+    <a href='/login' class="m-4 p-2 bg-light">Login</a>
   {{/if}}
-
+</div>
 </div>

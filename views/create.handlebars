@@ -1,24 +1,26 @@
-<div class="container-fluid">
-  <h1> New Blog </h1>
+{{> header}}
+
+<div class="container bg-primary py-5">
+  <div class="container">
+    <h1 class="text-light"> New Blog </h1>
+  </div>
+  <div class="container">
       <div class="row">
-        {{!-- <div class="col-4 list-container" id="list-container">
-          <div class="card">
-            <ul class="list-group" id="list-group"></ul>
-          </div>
-        </div> --}}
-        <div class="col-8">
-          <form class="note-form">
+        
+        <div class="col-8 bg-danger">
+          <form class="note-form bg-dark">
             <input
-            class="note-title"
+            class="note-title bg-dark text-light p-2"
             placeholder="Blog Title"
             maxlength="64"
             type="text"
             />
-            <textarea class="note-textarea" placeholder="Body Text"></textarea>
+            <textarea class="note-textarea text-white my-2 p-4 bg-primary" placeholder="Body Text"></textarea>
           </form>
         </div>
       </div>
-      <button id="save">Save Blog</button>
-    <script src="/js/save-blog.js"></script>
+      <button id="save" class="my-2 p-2 bg-dark text-danger">Save Blog</button>
+      </div>
+      <script src="/js/save-blog.js"></script>
     </div>
     

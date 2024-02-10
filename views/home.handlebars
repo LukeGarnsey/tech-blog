@@ -1,10 +1,18 @@
 {{> header}}
-<h3>Main Page</h3>
-{{#each blogPosts as |blog|}}
-{{> blog}}
-<h3>Comments:</h3>
-{{#each blog.dataValues.comments as |comment|}}
-<p><span> Author: {{comment.dataValues.user.dataValues.username}}</span> --{{comment.dataValues.content}} </p>
-{{/each}}
-<span>---------</span>
-{{/each}}
+<div class="container bg-info">
+  <h1 class="pl-4">Tech Drop Blog Posts</h1>
+  <hr class="pb-5">
+  {{#each blogPosts as |blog|}}
+  {{> blog}}
+  <hr>
+  <div class="container">
+  <h3 class="container">Comments</h3>
+  {{#each blog.dataValues.comments as |comment|}}
+  
+  {{> comment}}
+ 
+  {{/each}}
+   </div>
+   <hr class="pb-5">
+  {{/each}}
+</div>

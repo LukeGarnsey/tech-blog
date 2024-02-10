@@ -33,6 +33,40 @@ router.get('/', async(req, res)=>{
     return res.status(500).send(err);
   }
 });
+router.get('/blog/:id', async(req, res)=>{
+  try{
+    if(!req.session.logged_in || !req.session.user_id)
+      return res.redirect("/login");
+
+    const blogPost = await BlogPost.findByPk(req.params.id, {
+      attributes:{exclude:['user_id', 'id', 'createdAt', 'updatedAt']},
+      include: [
+      {
+        model:Comment, 
+        attributes:['content'], 
+        include: [
+          {
+            model:User, attributes:['username']
+          }], 
+      }, 
+      {
+        model:User, attributes:['username'],
+      }],
+      
+    });
+    const temp = {
+      isLoggedIn:req.session.logged_in
+    };
+    if(!blogPost)
+      return res.status(404).redirect("/");
+    
+    temp.blogPost = blogPost;
+    return res.status(200).render('blogpost', temp);
+    
+  }catch(err){
+    return res.status(500).send(err);
+  }
+});
 router.get("/comments", async(req,res)=>{
   try{
     const items = await Comment.findAll();
