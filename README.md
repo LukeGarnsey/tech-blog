@@ -17,6 +17,9 @@ To setup the app with seed data, in root directory run 'npm run seed'.
 run 'node server' to start the application.
 The application should then be running and able to be used in browser
 
+### Examples
+
+![alt text](./screenshots/home.png)![alt text](./screenshots/dashboard.png)![alt text](./screenshots/user.png)
 
 ## Credits
 This app is a CLI [Node](https://nodejs.org) application   
